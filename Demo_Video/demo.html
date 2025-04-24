@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exium - Product Demo</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background-color: #121212;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #0a0a0a;
+            padding: 1.5rem;
+            border-bottom: 1px solid #2a2a2a;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 50px;
+        }
+        
+        /* Main content styles */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Exam-themed background elements */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.07;
+            pointer-events: none;
+        }
+        
+        /* Grid pattern like graph paper */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(#26a69a 1px, transparent 1px),
+                linear-gradient(90deg, #26a69a 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.15;
+        }
+        
+        /* Checkmark elements */
+        .checkmark {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #26a69a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.2;
+        }
+        
+        .checkmark::before {
+            content: '✓';
+            color: #26a69a;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .checkmark-1 {
+            top: 15%;
+            left: 10%;
+        }
+        
+        .checkmark-2 {
+            top: 40%;
+            right: 15%;
+        }
+        
+        .checkmark-3 {
+            bottom: 20%;
+            left: 20%;
+        }
+        
+        /* Multiple choice bubbles */
+        .mc-bubble-group {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mc-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .mc-bubble {
+            width: 15px;
+            height: 15px;
+            border: 1px solid #26a69a;
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+        
+        .mc-bubble-filled {
+            background-color: #26a69a;
+        }
+        
+        .mc-group-1 {
+            top: 30%;
+            left: 5%;
+        }
+        
+        .mc-group-2 {
+            bottom: 25%;
+            right: 8%;
+        }
+        
+        /* Ruler marks */
+        .ruler {
+            position: absolute;
+            background-color: rgba(38, 166, 154, 0.15);
+        }
+        
+        .ruler-h {
+            height: 1px;
+            width: 100px;
+        }
+        
+        .ruler-v {
+            width: 1px;
+            height: 100px;
+        }
+        
+        .ruler-marks {
+            position: absolute;
+            display: flex;
+        }
+        
+        .ruler-marks-h {
+            flex-direction: row;
+        }
+        
+        .ruler-marks-v {
+            flex-direction: column;
+        }
+        
+        .ruler-mark {
+            background-color: rgba(38, 166, 154, 0.2);
+        }
+        
+        .ruler-mark-h {
+            width: 1px;
+            height: 5px;
+            margin: 0 9px;
+        }
+        
+        .ruler-mark-v {
+            height: 1px;
+            width: 5px;
+            margin: 9px 0;
+        }
+        
+        .ruler-1 {
+            top: 15%;
+            right: 10%;
+        }
+        
+        .ruler-2 {
+            bottom: 30%;
+            left: 15%;
+        }
+        
+        .demo-section {
+            margin-top: 2rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #b0b0b0;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+        
+        /* Video container with neon effect */
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            /* Neon glow effect */
+            box-shadow: 
+                0 0 5px rgba(38, 166, 154, 0.5),
+                0 0 10px rgba(38, 166, 154, 0.5),
+                0 0 20px rgba(38, 166, 154, 0.5),
+                0 0 40px rgba(38, 166, 154, 0.3),
+                0 0 80px rgba(38, 166, 154, 0.2);
+        }
+        
+        /* Neon border effect */
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid #26a69a;
+            border-radius: 12px;
+            box-shadow: 
+                inset 0 0 10px rgba(38, 166, 154, 0.8),
+                inset 0 0 20px rgba(38, 166, 154, 0.4);
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Video styling */
+        video {
+            width: 100%;
+            display: block;
+            background-color: transparent;
+            position: relative;
+            z-index: 0;
+        }
+        
+        /* Pulsating animation for the neon effect */
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 
+                    0 0 5px rgba(38, 166, 154, 0.5),
+                    0 0 10px rgba(38, 166, 154, 0.5),
+                    0 0 20px rgba(38, 166, 154, 0.5),
+                    0 0 40px rgba(38, 166, 154, 0.3),
+                    0 0 80px rgba(38, 166, 154, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 0 10px rgba(38, 166, 154, 0.6),
+                    0 0 20px rgba(38, 166, 154, 0.6),
+                    0 0 30px rgba(38, 166, 154, 0.6),
+                    0 0 50px rgba(38, 166, 154, 0.4),
+                    0 0 90px rgba(38, 166, 154, 0.3);
+            }
+            100% {
+                box-shadow: 
+                    0 0 5px rgba(38, 166, 154, 0.5),
+                    0 0 10px rgba(38, 166, 154, 0.5),
+                    0 0 20px rgba(38, 166, 154, 0.5),
+                    0 0 40px rgba(38, 166, 154, 0.3),
+                    0 0 80px rgba(38, 166, 154, 0.2);
+            }
+        }
+        
+        .video-container {
+            animation: neonPulse 3s infinite ease-in-out;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #0a0a0a;
+            color: #888;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 1px solid #2a2a2a;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            /* Reduce neon effect on mobile for better performance */
+            .video-container {
+                box-shadow: 
+                    0 0 5px rgba(38, 166, 154, 0.5),
+                    0 0 10px rgba(38, 166, 154, 0.3);
+                animation: none;
+            }
+            
+            .video-container::before {
+                box-shadow: 
+                    inset 0 0 5px rgba(38, 166, 154, 0.6);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <!-- Grid pattern background -->
+        <div class="grid-pattern"></div>
+        
+        <!-- Checkmarks -->
+        <div class="checkmark checkmark-1"></div>
+        <div class="checkmark checkmark-2"></div>
+        <div class="checkmark checkmark-3"></div>
+        
+        <!-- Multiple choice bubbles -->
+        <div class="mc-bubble-group mc-group-1">
+            <div class="mc-row">
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble mc-bubble-filled"></div>
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble"></div>
+            </div>
+            <div class="mc-row">
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble mc-bubble-filled"></div>
+                <div class="mc-bubble"></div>
+            </div>
+        </div>
+        
+        <div class="mc-bubble-group mc-group-2">
+            <div class="mc-row">
+                <div class="mc-bubble mc-bubble-filled"></div>
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble"></div>
+            </div>
+            <div class="mc-row">
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble"></div>
+                <div class="mc-bubble mc-bubble-filled"></div>
+            </div>
+        </div>
+        
+        <!-- Ruler elements -->
+        <div class="ruler ruler-h ruler-1"></div>
+        <div class="ruler-marks ruler-marks-h ruler-1">
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+            <div class="ruler-mark ruler-mark-h"></div>
+        </div>
+        
+        <div class="ruler ruler-v ruler-2"></div>
+        <div class="ruler-marks ruler-marks-v ruler-2">
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+            <div class="ruler-mark ruler-mark-v"></div>
+        </div>
+    </div>
+    
+    <header>
+        <div class="logo-container">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-GiV7uMCMG3YL9hAQ0Mz107ePn08VCC.png" alt="Exium Logo" class="logo">
+        </div>
+    </header>
+    
+    <main>
+        <section class="demo-section">
+            <h1>Product Demo</h1>
+            <p>This is a demo for our prototype. It shows what happens when a student tries to cheat.<b>(Note: This video is not a proper representation of the finished product.)</b> </p>
+            
+            <div class="video-container">
+                <video controls autoplay loop>
+                    <source src="Demo_Video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Exium. All rights reserved.</p>
+    </footer>
+</body>
+</html>
